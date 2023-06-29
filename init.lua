@@ -130,13 +130,21 @@ require('lazy').setup({
   },
 
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    'haishanh/night-owl.vim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'night-owl'
     end,
   },
+
+--  {
+--    -- Theme inspired by Atom
+--    'navarasu/onedark.nvim',
+--    priority = 1000,
+--    config = function()
+--      vim.cmd.colorscheme 'onedark'
+--    end,
+--  },
 
   {
     -- Set lualine as statusline
@@ -187,6 +195,8 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
+      'nvim-treesitter/nvim-treesitter-context',
+      'HiPhish/nvim-ts-rainbow2',
     },
     build = ':TSUpdate',
   },
@@ -203,6 +213,13 @@ require('lazy').setup({
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   { import = 'custom.plugins' },
+
+  -- nvim tree
+  { 'nvim-tree/nvim-tree.lua' },
+  { 'nvim-tree/nvim-web-devicons' },
+
+  -- GitHub Copilot
+  { 'github/copilot.vim' }
 }, {})
 
 -- [[ Setting options ]]
@@ -211,9 +228,11 @@ require('lazy').setup({
 
 -- Set highlight on search
 vim.o.hlsearch = false
+vim.o.incsearch = true
 
 -- Make line numbers default
 vim.wo.number = true
+vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -226,10 +245,26 @@ vim.o.clipboard = 'unnamedplus'
 -- Enable break indent
 vim.o.breakindent = true
 
+-- Linebreaking
+vim.o.showbreak = '↪ '
+vim.o.linebreak = true
+
+-- Visible white space
+vim.opt.listchars = {
+    eol = '⤶',
+    space = '·',
+    trail = '␣',
+    nbsp = '␣',
+    extends = '❯',
+    precedes = '❮',
+    tab = ' ▸ ',
+}
+vim.o.list = true
+
 -- Save undo history
 vim.o.undofile = true
 
--- Case-insensitive searching UNLESS \C or capital in search
+-- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
@@ -246,6 +281,14 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+
+-- Scroll off settings
+vim.o.scrolloff = 5
+vim.o.sidescrolloff = 5
+vim.o.signcolumn = "yes"
+
+-- Highlight the current line
+vim.o.cursorline = true
 
 -- [[ Basic Keymaps ]]
 
@@ -366,6 +409,9 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
+  rainbow = {
+    enable = true
+  }
 }
 
 -- Diagnostic keymaps
@@ -511,5 +557,33 @@ cmp.setup {
   },
 }
 
+-- [[ Configure nvim-tree ]]
+require('nvim-tree').setup({
+  hijack_netrw = false
+})
+
+vim.keymap.set('n', '<leader>ex', ':NvimTreeFindFileToggle<CR>')
+
+-- [[ Configure GitHub Copilot ]]
+local function SuggestOneCharacter()
+  -- Load in a suggestion for insertion
+  vim.fn['copilot#Accept']("")
+  local bar = vim.fn['copilot#TextQueuedForInsertion']()
+  return bar:sub(1, 1)
+end
+
+local function SuggestOneWord()
+  -- Load in a suggestion for insertion
+  vim.fn['copilot#Accept']("")
+  local bar = vim.fn['copilot#TextQueuedForInsertion']()
+  return vim.fn.split(bar,  [[[ .]\zs]])[1]
+end
+
+vim.keymap.set("i", "<C-Right>", SuggestOneCharacter, { expr = true, remap = false })
+vim.keymap.set("i", "<S-Right>", SuggestOneWord, { expr = true, remap = false })
+vim.keymap.set("i", "<M-Right>", 'copilot#Accept("")', { silent = true, expr = true })
+vim.keymap.set("n", "<leader>vco", "<cmd>Copilot<CR>", { silent = true })
+--
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+--
