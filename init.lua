@@ -221,8 +221,8 @@ require('lazy').setup({
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
--- Set highlight on search
-vim.o.hlsearch = false
+-- Set highlight on search, <C-L> clears the highlight by forcing a redraw
+vim.o.hlsearch = true
 vim.o.incsearch = true
 
 -- Make line numbers default
