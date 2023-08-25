@@ -221,7 +221,8 @@ require('lazy').setup({
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
--- Set highlight on search, <C-L> clears the highlight by forcing a redraw
+-- Set highlight on search, <C-L> clears the highlight by forcing a redraw, or you can use <leader><CR>
+vim.keymap.set('n', '<leader><CR>', '<cmd>nohlsearch<CR>', { silent = true, noremap = true })
 vim.o.hlsearch = true
 vim.o.incsearch = true
 
