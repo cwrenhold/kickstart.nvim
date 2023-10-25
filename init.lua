@@ -201,6 +201,13 @@ require('lazy').setup({
       'HiPhish/nvim-ts-rainbow2',
     },
     build = ':TSUpdate',
+    config = function ()
+      local configs = require('nvim-treesitter.configs')
+
+      configs.setup({
+        ensure_installed = { 'jsonc', 'lua', 'vimdoc', 'vim', 'html' },
+      })
+    end
   },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
