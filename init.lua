@@ -292,6 +292,9 @@ vim.o.signcolumn = "yes"
 -- Highlight the current line
 vim.o.cursorline = true
 
+-- Set wildmenu to use fuzzy as well
+vim.o.wildoptions = 'fuzzy,pum,tagfile'
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
