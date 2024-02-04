@@ -8,7 +8,7 @@ return {
         always = true,
         neovim_config = {
           enabled = true,
-          options = { "readonly" },
+          options = {},
         },
         neovim_data = {
           enabled = false,
@@ -20,5 +20,5 @@ return {
         },
       },
     }
-  end,
+  end
 }
