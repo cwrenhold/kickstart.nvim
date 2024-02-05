@@ -289,6 +289,9 @@ vim.o.scrolloff = 5
 vim.o.sidescrolloff = 5
 vim.o.signcolumn = "yes"
 
+-- Colour columns at 80 and 160 characters
+vim.o.colorcolumn = "80,160"
+
 -- Highlight the current line
 vim.o.cursorline = true
 
