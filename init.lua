@@ -198,7 +198,6 @@ require('lazy').setup({
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
       'nvim-treesitter/nvim-treesitter-context',
-      'HiPhish/nvim-ts-rainbow2',
     },
     build = ':TSUpdate',
   },
