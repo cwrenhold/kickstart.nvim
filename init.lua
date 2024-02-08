@@ -160,18 +160,18 @@ require('lazy').setup({
     },
   },
 
-  {
-    -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
-    main = 'ibl',
-    opts = {
-      indent = {
-        char = '┊',
-      },
-    },
-  },
+  --{
+  --  -- Add indentation guides even on blank lines
+  --  'lukas-reineke/indent-blankline.nvim',
+  --  -- Enable `lukas-reineke/indent-blankline.nvim`
+  --  -- See `:help indent_blankline.txt`
+  --  main = 'ibl',
+  --  opts = {
+  --    indent = {
+  --      char = '┊',
+  --    },
+  --  },
+  --},
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
@@ -490,6 +490,8 @@ nmap('<leader>k', vim.lsp.buf.signature_help, 'Signature Documentation')
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+
+  nmap('<leader>ff', vim.lsp.buf.format, '[F]ormat [F]ile')
 end
 
 -- Enable the following language servers
